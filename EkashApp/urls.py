@@ -67,4 +67,12 @@ urlpatterns = [
     path('verify-id', homeViews.verifyId, name ='verifyId'),
     path('verifying-id', homeViews.verifyingId, name ='verifyingId'),
     path('wallets', homeViews.wallets, name ='wallets'),
+    # Banks CRUD
+    path('banks', homeViews.bank_list, name='bank_list'),
+    path('banks/<int:pk>/edit', homeViews.bank_edit, name='bank_edit'),
+    path('banks/<int:pk>/delete', homeViews.bank_delete, name='bank_delete'),
+    # Cards CRUD
+    path('cards', homeViews.card_list, name='card_list'),
+    path('cards/<int:pk>/edit', homeViews.card_edit, name='card_edit'),
+    path('cards/<int:pk>/delete', homeViews.card_delete, name='card_delete'),
 ]
