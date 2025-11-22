@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import BankForm, CardForm, SignUpForm, SignInForm
 from .models import Bank, Card
+from django.shortcuts import get_object_or_404
 
 def index2(request):
     data = {
@@ -114,6 +115,100 @@ def bankAddSuccessful(request):
         'subTitle': 'Add Bank',
     }
     return render(request, "home/bankAddSuccessful.html", data)
+
+
+def bank_list(request):
+    # show banks for the logged-in user; staff see all
+    if request.user.is_authenticated and request.user.is_staff:
+        banks = Bank.objects.all().order_by('-created_at')
+    elif request.user.is_authenticated:
+        banks = Bank.objects.filter(user=request.user).order_by('-created_at')
+    else:
+        banks = Bank.objects.none()
+
+    return render(request, 'home/banks_list.html', {'banks': banks, 'title': 'My Banks'})
+
+
+def bank_edit(request, pk=None):
+    if pk:
+        bank = get_object_or_404(Bank, pk=pk)
+        if request.method == 'POST':
+            form = BankForm(request.POST, instance=bank)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Bank updated.')
+                return redirect(reverse('bank_list'))
+        else:
+            form = BankForm(instance=bank)
+    else:
+        if request.method == 'POST':
+            form = BankForm(request.POST)
+            if form.is_valid():
+                bank = form.save(commit=False)
+                if request.user.is_authenticated:
+                    bank.user = request.user
+                bank.save()
+                messages.success(request, 'Bank created.')
+                return redirect(reverse('bank_list'))
+        else:
+            form = BankForm()
+
+    return render(request, 'home/bank_form.html', {'form': form})
+
+
+def bank_delete(request, pk):
+    bank = get_object_or_404(Bank, pk=pk)
+    if request.method == 'POST':
+        bank.delete()
+        messages.success(request, 'Bank deleted.')
+        return redirect(reverse('bank_list'))
+    return render(request, 'home/bank_confirm_delete.html', {'bank': bank})
+
+
+def card_list(request):
+    if request.user.is_authenticated and request.user.is_staff:
+        cards = Card.objects.all().order_by('-created_at')
+    elif request.user.is_authenticated:
+        cards = Card.objects.filter(user=request.user).order_by('-created_at')
+    else:
+        cards = Card.objects.none()
+    return render(request, 'home/cards_list.html', {'cards': cards, 'title': 'My Cards'})
+
+
+def card_edit(request, pk=None):
+    if pk:
+        card = get_object_or_404(Card, pk=pk)
+        if request.method == 'POST':
+            form = CardForm(request.POST, instance=card)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Card updated.')
+                return redirect(reverse('card_list'))
+        else:
+            form = CardForm(instance=card)
+    else:
+        if request.method == 'POST':
+            form = CardForm(request.POST)
+            if form.is_valid():
+                card = form.save(commit=False)
+                if request.user.is_authenticated:
+                    card.user = request.user
+                card.save()
+                messages.success(request, 'Card created.')
+                return redirect(reverse('card_list'))
+        else:
+            form = CardForm()
+
+    return render(request, 'home/card_form.html', {'form': form})
+
+
+def card_delete(request, pk):
+    card = get_object_or_404(Card, pk=pk)
+    if request.method == 'POST':
+        card.delete()
+        messages.success(request, 'Card deleted.')
+        return redirect(reverse('card_list'))
+    return render(request, 'home/card_confirm_delete.html', {'card': card})
     
 def blank(request):
     data = {
