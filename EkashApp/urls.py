@@ -75,4 +75,15 @@ urlpatterns = [
     path('cards', homeViews.card_list, name='card_list'),
     path('cards/<int:pk>/edit', homeViews.card_edit, name='card_edit'),
     path('cards/<int:pk>/delete', homeViews.card_delete, name='card_delete'),
+    # Wallets & Transactions
+    path('wallets', homeViews.wallet_list, name='wallet_list'),
+    path('wallets/add', homeViews.wallet_edit, name='wallet_add'),
+    path('wallets/<int:pk>/edit', homeViews.wallet_edit, name='wallet_edit'),
+    path('wallets/<int:pk>/delete', homeViews.wallet_delete, name='wallet_delete'),
+    path('transactions', homeViews.transaction_list, name='transaction_list'),
+    path('transactions/add', homeViews.transaction_create, name='transaction_add'),
+
+    # Support tickets
+    path('support-tickets', homeViews.support_tickets_list, name='support_tickets_list'),
+    path('support-tickets/add', homeViews.support_ticket_create, name='support_ticket_add'),
 ]
