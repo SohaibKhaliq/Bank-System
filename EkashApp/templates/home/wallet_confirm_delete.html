@@ -1,0 +1,25 @@
+{% extends '../layouts/layout.html' %}
+
+{% block content %}
+<div class="content-body">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header"><h4>Delete Wallet</h4></div>
+          <div class="card-body">
+            <p>Are you sure you want to delete wallet <strong>{{ wallet.name }}</strong>?</p>
+            <form method="post" action="">
+              {% csrf_token %}
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger">Yes, delete</button>
+                <a href="{% url 'wallet_list' %}" class="btn btn-secondary">Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
