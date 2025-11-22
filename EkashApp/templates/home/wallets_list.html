@@ -1,0 +1,45 @@
+{% extends '../layouts/layout.html' %}
+
+{% block content %}
+<div class="content-body">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Wallets</h3>
+      <a href="{% url 'wallet_add' %}" class="btn btn-primary">Add Wallet</a>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        {% if wallets and wallets.exists %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Balance</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for wallet in wallets %}
+              <tr>
+                <td>{{ wallet.name }}</td>
+                <td>{{ wallet.balance }}</td>
+                <td class="text-end">
+                  <a href="{% url 'wallet_edit' wallet.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                  <form action="{% url 'wallet_delete' wallet.pk %}" method="post" style="display:inline">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>No wallets found. <a href="{% url 'wallet_add' %}">Add your first wallet</a>.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
