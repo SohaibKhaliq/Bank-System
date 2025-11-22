@@ -1,0 +1,68 @@
+{% extends '../layouts/layout.html' %}
+
+{% block script %}
+            <script src="/static/vendor/chartjs/chartjs.js"></script>
+            <script src="/static/js/plugins/chartjs-line-balance-wallet.js"></script>
+            <script src="/static/js/plugins/chartjs-line-total-balance.js"></script>
+{% endblock %} 
+
+{% block content %}
+
+        <div class="content-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-xl-4">
+                                    <div class="page-title-content">
+                                        <h3>Balance</h3>
+                                        <p class="mb-2">Welcome Ekash Finance Management</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="breadcrumbs"><a href="#">Home </a>
+                                        <span><i class="fi fi-rr-angle-small-right"></i></span>
+                                        <a href="#">Balance</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12">
+                        <div class="settings-menu">
+                            <a href="{% url 'analytics' %}">Analytics</a>
+                            <a href="{% url 'analyticsExpenses' %}">Expenses</a>
+                            <a href="{% url 'analyticsIncome' %}">Income</a>
+                            <a href="{% url 'analyticsIncomeVsExpenses' %}">Income vs Expenses</a>
+                            <a href="{% url 'analyticsBalance' %}">Balance</a>
+                            <a href="{% url 'analyticsTransactionHistory' %}">Transaction History</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Total Balance </h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="chartjsTotalBalance"></canvas>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Balance by Wallet </h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="chartjsBalanceWallet"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock content %}

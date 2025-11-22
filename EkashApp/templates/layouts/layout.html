@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+ // Name: ekash
+ // Description: Personal Finance Management Admin Dashboard App Template
+ // Version: 1.0.0
+ // Developed on 2025-06-05 15:46:09
+ // Email : pixcelsthemes@gmail.com
+ // Author: Pixcels Themes
+ // URL: https://themeforest.net/user/pixcelsthemes/portfolio
+-->
+
+<html lang="en">
+
+    {% include 'partials/head.html' %}
+
+<body class="dashboard">
+
+    {% include 'partials/preloader.html' %}
+
+    <div id="main-wrapper">
+
+        {% if header %}
+            {{ header|safe }}
+        {% else %}
+            {% include 'partials/header.html' %}
+        {% endif %}
+
+        {% if sidebar %}
+            {{ sidebar|safe }}
+        {% else %}
+            {% include 'partials/sidebar.html' %}
+        {% endif %}
+
+        {# Main Content #}
+        {% block content %}
+        {% endblock %}
+
+        {% if footer %}
+            {{ footer|safe }}
+        {% else %}
+            {% include 'partials/footer.html' %}
+        {% endif %}
+
+    </div>
+
+    {% include 'partials/script.html' %}
+
+    {% block script %}
+    {% endblock %}
+
+</body>
+</html>
