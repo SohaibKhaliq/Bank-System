@@ -1,0 +1,49 @@
+{% extends '../layouts/layout.html' %}
+
+{% block content %}
+<div class="content-body">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>My Banks</h3>
+      <a href="{% url 'addBank' %}" class="btn btn-primary">Add Bank</a>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        {% if banks and banks.exists %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Full name</th>
+                <th>Account</th>
+                <th>Routing</th>
+                <th>Created</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for bank in banks %}
+              <tr>
+                <td>{{ bank.full_name }}</td>
+                <td>****{{ bank.account_number|slice:"-4:" }}</td>
+                <td>{{ bank.routing_number }}</td>
+                <td>{{ bank.created_at }}</td>
+                <td class="text-end">
+                  <a href="{% url 'bank_edit' bank.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                  <form action="{% url 'bank_delete' bank.pk %}" method="post" style="display:inline">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>No banks found. <a href="{% url 'addBank' %}">Add your first bank</a>.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
