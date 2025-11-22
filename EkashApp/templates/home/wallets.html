@@ -125,7 +125,7 @@
                                             <div class="cc-number">
                                                 {% if selected_wallet %}
                                                     {% with cards=selected_wallet.user.card_set.all %}
-                                                    {% if cards and cards|length>0 %}
+                                                    {% if cards %}
                                                         {% for c in cards|slice:":1" %}
                                                             {% comment %} show masked card number {% endcomment %}
                                                             <h6>{{ c.card_number|slice:":4" }}</h6>
