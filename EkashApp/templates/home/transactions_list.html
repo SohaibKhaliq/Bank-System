@@ -1,0 +1,43 @@
+{% extends '../layouts/layout.html' %}
+
+{% block content %}
+<div class="content-body">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Transactions</h3>
+      <a href="{% url 'transaction_add' %}" class="btn btn-primary">New Transaction</a>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        {% if transactions and transactions.exists %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Wallet</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for tx in transactions %}
+              <tr>
+                <td>{{ tx.wallet.name }}</td>
+                <td>{{ tx.amount }}</td>
+                <td>{{ tx.get_type_display }}</td>
+                <td>{{ tx.category }}</td>
+                <td>{{ tx.date }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>No transactions yet. <a href="{% url 'transaction_add' %}">Create one</a>.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
