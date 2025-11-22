@@ -91,7 +91,11 @@
                         <div class="tab-content wallet-tab-content">
                             <div class="tab-pane show active">
                                 <div class="wallet-tab-title">
-                                    <h3>{{ selected_wallet.name if selected_wallet else 'No Wallet Selected' }}</h3>
+                                    {% if selected_wallet %}
+                                        <h3>{{ selected_wallet.name }}</h3>
+                                    {% else %}
+                                        <h3>No Wallet Selected</h3>
+                                    {% endif %}
                                 </div>
                                 <div class="row">
                                     <div class="col-xxl-6 col-xl-6 col-lg-6">
