@@ -1,4 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from .forms import BankForm, CardForm, SignUpForm, SignInForm
+from .models import Bank, Card
 
 def index2(request):
     data = {
@@ -8,16 +13,42 @@ def index2(request):
     return render(request,"home/index2.html",data)
 
 def addBank(request):
+    if request.method == 'POST':
+        form = BankForm(request.POST)
+        if form.is_valid():
+            bank = form.save(commit=False)
+            if request.user.is_authenticated:
+                bank.user = request.user
+            bank.save()
+            messages.success(request, 'Bank added successfully.')
+            return redirect(reverse('bankAddSuccessful'))
+    else:
+        form = BankForm()
+
     data = {
         'title': 'Add Bank',
         'subTitle': 'Add Bank',
+        'form': form,
     }
     return render(request, "home/addBank.html", data)
     
 def addCard(request):
+    if request.method == 'POST':
+        form = CardForm(request.POST)
+        if form.is_valid():
+            card = form.save(commit=False)
+            if request.user.is_authenticated:
+                card.user = request.user
+            card.save()
+            messages.success(request, 'Card added successfully.')
+            return redirect(reverse('bankAddSuccessful'))
+    else:
+        form = CardForm()
+
     data = {
-        'title': 'Add Bank',
-        'subTitle': 'Add Bank',
+        'title': 'Add Card',
+        'subTitle': 'Add Card',
+        'form': form,
     }
     return render(request, "home/addCard.html", data)
     
@@ -253,16 +284,43 @@ def settingsSession(request):
     return render(request, "home/settingsSession.html", data)
     
 def signin(request):
+    if request.method == 'POST':
+        form = SignInForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect(reverse('index'))
+    else:
+        form = SignInForm()
+
     data = {
-        'title': 'Add Bank',
-        'subTitle': 'Add Bank',
+        'title': 'Sign In',
+        'subTitle': 'Sign In',
+        'form': form,
     }
     return render(request, "home/signin.html", data)
     
 def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            password = form.cleaned_data.get('password')
+            user.set_password(password)
+            user.save()
+            # auto-login
+            user = authenticate(username=user.username, password=password)
+            if user:
+                login(request, user)
+                return redirect(reverse('index'))
+            return redirect(reverse('signin'))
+    else:
+        form = SignUpForm()
+
     data = {
-        'title': 'Add Bank',
-        'subTitle': 'Add Bank',
+        'title': 'Sign Up',
+        'subTitle': 'Sign Up',
+        'form': form,
     }
     return render(request, "home/signup.html", data)
     
