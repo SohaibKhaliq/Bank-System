@@ -51,15 +51,16 @@
                         <div class="col-lg-6">
                             <div class="auth-form">
                                 <h4>Sign In</h4>
-                                <form action="otp-phone">
+                                <form method="post" action="">
+                                    {% csrf_token %}
                                     <div class="row">
                                         <div class="col-12 mb-3">
                                             <label class="form-label">Email</label>
-                                            <input name="email" type="text" class="form-control" />
+                                            <input name="username" type="text" class="form-control" />
                                         </div>
                                         <div class="col-12 mb-3">
                                             <label class="form-label">Password</label>
-                                            <input name="password" type="text" class="form-control" />
+                                            <input name="password" type="password" class="form-control" />
                                         </div>
                                         <div class="col-6">
                                             <div class="form-check">
@@ -70,7 +71,7 @@
                                         </div>
                                         <div class="col-6 text-end"><a href="{% url 'reset' %}">Forgot Password?</a></div>
                                     </div>
-                                    <div class="mt-3 d-grid gap-2"><button type="submit"
+                                        <div class="mt-3 d-grid gap-2"><button type="submit"
                                             class="btn btn-primary me-8 text-white">Sign In</button></div>
                                 </form>
                                 <p class="mt-3 mb-0 undefined">Don't have an account?<a class="text-primary"
