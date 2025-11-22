@@ -226,7 +226,7 @@
                                                                     </td>
                                                                     <td>{{ t.date|date:"d.m.Y" }}</td>
                                                                     <td>{{ t.description }}</td>
-                                                                    <td>{% if t.type=='expense' %}-{% endif %}{{ t.amount }}</td>
+                                                                    <td>{% if t.type == 'expense' %}-{% endif %}{{ t.amount }}</td>
                                                                     <td>USD</td>
                                                                 </tr>
                                                                 {% empty %}
