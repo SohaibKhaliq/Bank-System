@@ -238,12 +238,17 @@ def wallet_edit(request, pk=None):
         else:
             form = WalletForm(instance=wallet)
     else:
+        # creating a new wallet requires an authenticated user
+        if not request.user.is_authenticated:
+            messages.error(request, 'You must be signed in to create a wallet.')
+            return redirect(reverse('signin'))
+
         if request.method == 'POST':
             form = WalletForm(request.POST)
             if form.is_valid():
                 wallet = form.save(commit=False)
-                if request.user.is_authenticated:
-                    wallet.user = request.user
+                # At this point request.user is authenticated (checked above)
+                wallet.user = request.user
                 wallet.save()
                 messages.success(request, 'Wallet created.')
                 return redirect(reverse('wallet_list'))
