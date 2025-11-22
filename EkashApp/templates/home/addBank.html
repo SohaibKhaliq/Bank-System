@@ -12,19 +12,20 @@
                                 <h4 class="card-title">Link a bank account</h4>
                             </div>
                             <div class="card-body">
-                                <form action="bank-add-successful">
+                                <form method="post" action="">
+                                    {% csrf_token %}
                                     <div class="form-row">
                                         <div class="mb-3 col-xl-12">
                                             <label class="mr-sm-2">Routing number </label>
-                                            <input type="text" class="form-control" placeholder="25487">
+                                            <input name="routing_number" type="text" class="form-control" placeholder="25487">
                                         </div>
                                         <div class="mb-3 col-xl-12">
                                             <label class="mr-sm-2">Account number </label>
-                                            <input type="text" class="form-control" placeholder="36475">
+                                            <input name="account_number" type="text" class="form-control" placeholder="36475">
                                         </div>
                                         <div class="mb-3 col-xl-12">
                                             <label class="mr-sm-2">Fulll name </label>
-                                            <input type="text" class="form-control" placeholder="Carla Pascle">
+                                            <input name="full_name" type="text" class="form-control" placeholder="Carla Pascle">
                                         </div>
                                         <div class="mb-3 col-xl-12">
                                             <img src="/static/images/routing.png" alt="" class="img-fluid">
@@ -36,8 +37,7 @@
                                                         class="btn btn-primary w-100">Back</a>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="{% url 'settingsBank' %}"
-                                                        class="btn btn-success  w-100">Save</a>
+                                                    <button type="submit" class="btn btn-success w-100">Save</button>
                                                 </div>
                                             </div>
                                         </div>
