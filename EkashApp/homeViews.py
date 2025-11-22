@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404
 from .forms import WalletForm, TransactionForm, SupportTicketForm
 from .models import Wallet, Transaction, SupportTicket
 from django.db import transaction as db_transaction
+from django.db import models
+from datetime import timedelta
 
 def index2(request):
     data = {
@@ -627,7 +629,7 @@ def wallets(request):
     # start 5 months ago
     months = []
     for i in range(5, -1, -1):
-        m = (now.replace(day=1) - timezone.timedelta(days=30*i))
+        m = (now.replace(day=1) - timedelta(days=30*i))
         months.append(m)
     cumulative = 0
     for m in months:
